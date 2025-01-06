@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs</title>
+    <link rel="stylesheet" href="style-1.css">
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
+
+    <div class="container">
+        <header>
+            <h1>FAQs</h1>
+        </header>
+        <section class="content">
+            <div class="card">
+                <h2>Frequently Asked Questions</h2>
+                <p><strong>Q: What is Steganography?</strong><br>A: Steganography is the practice of hiding information within other non-secret data.</p>
+                <p><strong>Q: How does StegaVault work?</strong><br>A: StegaVault allows you to embed and retrieve hidden data in files like images, videos, and audio.</p>
+                <p><strong>Q: Is my data secure?</strong><br>A: Yes, StegaVault uses encryption to ensure your data remains secure and hidden.</p>
+            </div>
+            <div class="form-container">
+                <h2>Ask a Question</h2>
+                <p>If you have a question that isnt listed here, feel free to ask us below:</p>
+                <form action="submit_question.php" method="post">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label for="question">Your Question:</label>
+                    <textarea id="question" name="question" placeholder="Write your question here..." rows="5" required></textarea>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <p><a href="home.html">&#8592; Back to Home</a></p>
+        </section>
+    </div>
+    <script>
+        // Your Firebase configuration (replace this with your config from Firebase Console)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCmr4DDTu1GHVUqPKWhxDzMENNljpkGaE8",
+            authDomain: "stegavault-fe14e.firebaseapp.com",
+            projectId: "stegavault-fe14e",
+            storageBucket: "stegavault-fe14e.firebasestorage.app",
+            messagingSenderId: "66901006600",
+            appId: "1:66901006600:web:91ae9859f0b8a33094f4bd",
+            measurementId: "G-PGZRZPBPBE"
+          };
+    
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database(); // For Realtime Database
+    </script>
+    
+
+    <script>
+        function submitQuestion() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const question = document.getElementById('question').value;
+    
+            // Push data to Firebase Realtime Database
+            firebase.database().ref('questions').push({
+                name: name,
+                email: email,
+                question: question
+            }).then(() => {
+                alert('Your question has been submitted!');
+                document.getElementById('faq-form').reset(); // Clear the form
+            }).catch(error => {
+                console.error('Error submitting question:', error);
+            });
+        }
+    </script>
+
+
+</body>
+</html>

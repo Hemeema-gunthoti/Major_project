@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login & Registration Form</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Splash Screen Styles */
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #2E0249; /* Background color for the splash screen */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 1s ease-out; /* Ensure it appears above all other content */
+    }
+
+    .splash-screen h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+      display: flex;
+    }
+
+    .splash-screen h1 span {
+      display: inline-block;
+      opacity: 0;
+      animation: bounce 0.6s ease-in-out forwards;
+    }
+
+    .splash-screen h1 span:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .splash-screen h1 span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .splash-screen h1 span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .splash-screen h1 span:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .splash-screen h1 span:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .splash-screen h1 span:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    .splash-screen h1 span:nth-child(7) {
+      animation-delay: 0.7s;
+    }
+
+    .splash-screen h1 span:nth-child(8) {
+      animation-delay: 0.8s;
+    }
+
+    .splash-screen h1 span:nth-child(9) {
+      animation-delay: 0.9s;
+    }
+
+    .splash-screen h1 span:nth-child(10) {
+      animation-delay: 1s;
+    }
+
+    .splash-screen h1 span:nth-child(11) {
+      animation-delay: 1.1s;
+    }
+
+    .splash-screen h1 span:nth-child(12) {
+      animation-delay: 1.2s;
+    }
+
+    .splash-screen h1 span:nth-child(13) {
+      animation-delay: 1.3s;
+    }
+
+   /* Slideshow Section */
+    .slideshow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease-in-out, visibility 1s;
+    }
+
+    .slideshow.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .slideshow .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      animation: backgroundFade 3s infinite;
+    }
+
+    @keyframes backgroundFade {
+      0%, 100% {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      }
+      25% {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+      }
+      50% {
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+      }
+      75% {
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+      }
+    }
+
+    .slideshow .slide {
+      position: absolute;
+      width: 90%;
+      max-width: 800px;
+      height: 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 1.8rem;
+      color: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+
+    .slide.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+
+    @keyframes bounce {
+      0% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      50% {
+        transform: translateY(30px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+     /* Hide the main container initially */
+     .container {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in; /* Smooth fade-in transition */
+    }
+
+    .container.show {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen">
+    <h1>
+      <span>S</span>
+      <span>t</span>
+      <span>e</span>
+      <span>g</span>
+      <span>a</span>
+      <span>V</span>
+      <span>a</span>
+      <span>u</span>
+      <span>l</span>
+      <span>t</span>
+    </h1>
+  </div>
+
+  <!-- Main Content -->
+  <div class="slideshow">
+    <div class="slide">Secure Steganography for sensitive data.</div>
+    <div class="slide">Multiple modes - text, image, audio, and more.</div>
+    <div class="slide">User-friendly interface for seamless experience.</div>
+    <div class="slide">Advanced encryption for maximum security.</div>
+  </div>
+
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Login</header>
+      <form action="#">
+        <input type="text" id='inUsr' placeholder="Enter your email">
+        <input type="password" id="inPass" placeholder="Enter your password">
+        <span class="signup">
+          <a href="#" id="forgotLabel">Forgot password?</a>
+        </span>
+        <input type="button" class="button loginbtn" value="Login">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+          <a href="#" id="signupLabel">Signup</a>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Signup</header>
+      <form action="#">
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="text" id='username' placeholder="Enter your username">
+        <input type="tel" id="Phone Number" placeholder ="Phone Number"> 
+        <input type="text" id='email' placeholder="Enter your email">
+        <input type="password" id='password' placeholder="Create a password">
+        <input type="button" class="button signupbtn" value="Signup">
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+          <a href="#" id="loginLabel">Login</a>
+        </span>
+      </div>
+    </div>
+    <div class="forgot form" >
+      <header>Forgot Password</header>
+      <form action="#">
+        <input type="text" id='forgotinp' placeholder="Enter your email">
+        <input type="button" class="button forgotbtn" value="Submit">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+          <a href="#" id="signupLabel">Signup</a>
+        </span>
+      </div>
+      <div class="signup">
+        <span class="signup">Already have an account?
+          <a href="#" id="loginLabel">Login</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="page0.js" type="module"></script>
+  <script>
+    // Wait for 3 seconds, then hide the splash screen and show the main content
+    window.addEventListener('load', () => {
+      const splash = document.querySelector('.splash-screen');
+      const slideshow = document.querySelector('.slideshow');
+      const slides = document.querySelectorAll('.slideshow .slide');
+      const container = document.querySelector('.container');
+      let currentSlide = 0;
+
+      // Hide splash screen after 3 seconds
+      setTimeout(() => {
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.style.display = 'none';
+          startSlideshow();
+        }, 1000);
+      }, 3000);
+
+      function startSlideshow() {
+        slideshow.classList.add('show');
+        showSlide(currentSlide);
+      }
+
+      function showSlide(index) {
+        if (index > 0) slides[index - 1].classList.remove('show');
+        slides[index].classList.add('show');
+
+        setTimeout(() => {
+          slides[index].classList.remove('show');
+          currentSlide++;
+
+          if (currentSlide < slides.length) {
+            showSlide(currentSlide);
+          } else {
+            endSlideshow();
+          }
+        }, 3000); // Show each slide for 3 seconds
+      }
+
+      function endSlideshow() {
+        slideshow.classList.remove('show');
+        setTimeout(() => {
+          slideshow.style.display = 'none';
+          container.classList.add('show');
+        }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>
