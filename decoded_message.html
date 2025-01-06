@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decoded Message</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Zilla+Slab&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Decoded Message</h1>
+    </header>
+
+    <section class="message-container">
+        <p class="decoded-message">The decoded message is:</p>
+        <div class="decoded-message-box">
+            <p>{{ message }}</p>
+        </div>
+    </section>
+    
+    <section class="back-button-container">
+        <a href="/" class="back-button">Back to Home</a>
+    </section>
+</div>
+
+</body>
+</html>

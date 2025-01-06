@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Steganography with AES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Zilla+Slab&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Image Steganography with AES</h1>
+    </header>
+    <div class="content">
+        <!-- Encode Section -->
+        <section class="encode-container">
+            <h2>Encode a Message</h2>
+            <form id="encode-form" action="/encode" method="POST" enctype="multipart/form-data">
+                <input type="text" name="message" placeholder="Enter Secret Message" required>
+                <input type="password" name="password" placeholder="Enter Password" required>
+                <input type="file" name="image" accept="image/*" required>
+                <button type="submit">Encode Message</button>
+            </form>
+            {% if encoded_image %}
+                <div class="result">
+                    <h3>Encoded Image Ready</h3>
+                    <a class="download-btn" href="data:image/png;base64,{{ encoded_image }}" download="encoded_image.png">
+                        Download Encoded Image
+                    </a>
+                    <br>
+                    <img src="data:image/png;base64,{{ encoded_image }}" alt="Encoded Image">
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Decode Section -->
+        <section class="decode-container">
+            <h2>Decode a Message</h2>
+            <form id="decode-form" action="/decode" method="POST" enctype="multipart/form-data">
+                <input type="password" name="password" placeholder="Enter Password" required>
+                <input type="file" name="encoded_image" accept="image/*" required>
+                <button type="submit">Decode Message</button>
+            </form>
+            {% if message %}
+                <div class="result">
+                    <h3>Decoded Message</h3>
+                    <p>{{ message }}</p>
+                </div>
+            {% elif error %}
+                <div class="error">
+                    <h3>Error</h3>
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+        </section>
+    </div>
+</div>
+</body>
+</html>
