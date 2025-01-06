@@ -1,1 +1,2 @@
-# Major_project
+# Stega Vault
+
