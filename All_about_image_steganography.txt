@@ -1,0 +1,160 @@
+This code implements a **Flask-based web application** for **secure communication using steganography and cryptography**. It allows users to hide encrypted messages inside images and retrieve them securely using a password. Below is a detailed explanation of each part of the code.
+
+---
+
+## **1. Libraries Used**
+### **Flask**
+- A lightweight web framework used to create the web application.
+- **`render_template`**: Renders HTML templates.
+- **`request`**: Handles HTTP POST requests.
+- **`send_file`**: Sends files to the client.
+- **`jsonify`**: Returns JSON responses.
+
+### **Cryptography (Hazmat Primitives)**
+- Provides AES encryption and key derivation.
+- **`Cipher`**: Encrypts and decrypts data.
+- **`PBKDF2HMAC`**: Derives a cryptographic key from a password.
+- **`hashes`**: Uses SHA-256 for secure hashing.
+
+### **Pillow (PIL)**
+- Used for image processing.
+- **`Image`**: Opens, manipulates, and saves images.
+
+### **Other Libraries**
+- **`io`**: Handles byte streams for in-memory file operations.
+- **`base64`**: Encodes and decodes binary data to/from Base64.
+- **`secrets`**: Generates cryptographically secure random values.
+- **`math`**: Provides mathematical functions for steganography.
+
+---
+
+## **2. Key Functions**
+
+### **AES Encryption and Decryption**
+
+#### **`encrypt_message(message, password)`**
+- **Input:** Plaintext message, password.
+- **Process:**
+  1. **Generate Salt and IV:**
+     - Salt (16 bytes) and IV (16 bytes) are randomly generated using `secrets.token_bytes`.
+  2. **Key Derivation:**
+     - PBKDF2HMAC derives a 256-bit key from the password using:
+       - SHA-256 hashing.
+       - 100,000 iterations for computational difficulty.
+       - Salt for randomness.
+  3. **Encryption:**
+     - AES in CFB mode encrypts the message.
+     - The salt, IV, and ciphertext are concatenated for storage.
+- **Output:** Encrypted message (salt + IV + ciphertext).
+
+#### **`decrypt_message(encrypted_message, password)`**
+- **Input:** Encrypted message (salt + IV + ciphertext), password.
+- **Process:**
+  1. Extract salt, IV, and ciphertext from the input.
+  2. Derive the same key using PBKDF2HMAC with the extracted salt.
+  3. Decrypt the ciphertext using AES in CFB mode.
+- **Output:** Decrypted plaintext message.
+
+---
+
+### **Mathematical Steganography**
+
+#### **`embed_message(image_file, message)`**
+- **Input:** Image file, plaintext message.
+- **Process:**
+  1. **Prepare the Message:**
+     - Append `<<<END>>>` to mark the end of the message.
+     - Convert the message to binary using `ord` and `format`.
+  2. **Modify Pixels:**
+     - Iterate through each pixel of the image.
+     - For each RGB channel, modify the pixel value using:
+       \[
+       \text{pixel}[n] = \text{pixel}[n] + (\text{message\_bit} \times 2^5)
+       \]
+     - This adds a power of 2 to encode the message bit.
+  3. **Save Encoded Image:**
+     - Save the modified image to an in-memory byte stream.
+- **Output:** Encoded image as a byte stream.
+
+#### **`extract_message(image_file)`**
+- **Input:** Encoded image file.
+- **Process:**
+  1. **Retrieve Bits:**
+     - Iterate through each pixel.
+     - For each RGB channel, extract the bit using:
+       \[
+       \text{bit} = \left(\frac{\text{pixel}[n]}{2^5}\right) \% 2
+       \]
+  2. **Reconstruct Message:**
+     - Combine bits into bytes.
+     - Convert bytes to characters using `chr`.
+     - Stop at the end marker `<<<END>>>`.
+- **Output:** Extracted plaintext message.
+
+---
+
+## **3. Flask Routes**
+
+### **`@app.route("/")`**
+- **Purpose:** Renders the homepage (`index.html`).
+
+### **`@app.route("/encode", methods=["POST"])`**
+- **Purpose:** Handles message encoding.
+- **Process:**
+  1. Retrieve the message, password, and image from the user.
+  2. Encrypt the message using `encrypt_message`.
+  3. Embed the encrypted message into the image using `embed_message`.
+  4. Convert the encoded image to Base64 for display in the browser.
+- **Output:** Encoded image displayed on the webpage.
+
+### **`@app.route("/decode", methods=["POST"])`**
+- **Purpose:** Handles message decoding.
+- **Process:**
+  1. Retrieve the password and encoded image from the user.
+  2. Extract the encrypted message using `extract_message`.
+  3. Decrypt the message using `decrypt_message`.
+  4. Handle errors (e.g., incorrect password or corrupted data).
+- **Output:** Decrypted message displayed on the webpage.
+
+---
+
+## **4. Key Features**
+
+### **Security**
+1. **AES Encryption:**
+   - Ensures the message is secure even if the encoded image is intercepted.
+2. **PBKDF2HMAC:**
+   - Protects against brute-force attacks on the password.
+
+### **Stealth**
+- Embeds the encrypted message into an image using mathematical encoding, making it imperceptible.
+
+### **User-Friendly**
+- Provides a simple web interface for encoding and decoding messages.
+
+---
+
+## **5. Example Workflow**
+
+### **Encoding**
+1. User uploads an image, enters a message, and provides a password.
+2. The message is encrypted using AES.
+3. The encrypted message is embedded into the image using steganography.
+4. The modified image is displayed/downloaded.
+
+### **Decoding**
+1. User uploads the encoded image and provides the password.
+2. The application extracts the encrypted message from the image.
+3. The message is decrypted using AES and displayed to the user.
+
+---
+
+## **6. Key Points to Highlight**
+1. **Mathematical Encoding:**
+   - Uses powers of 2 to encode bits into pixel values.
+2. **Error Handling:**
+   - Ensures invalid passwords or corrupted data do not crash the application.
+3. **Web Interface:**
+   - Simplifies the process for non-technical users.
+
+This comprehensive implementation ensures secure and stealthy communication using a combination of cryptography and steganography.

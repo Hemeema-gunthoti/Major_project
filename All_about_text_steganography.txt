@@ -1,0 +1,105 @@
+
+
+Sure! Below is a detailed explanation of each file in your text steganography project:
+
+### 1. **AES.py** (Encryption and Decryption)
+This file handles the encryption and decryption of messages using the AES algorithm.
+
+- **get_private_key(password)**: 
+  - This function generates a private key from a password using the PBKDF2 key derivation function. A salt (`b"this is a salt"`) is used to make the key generation more secure. The derived key is 32 bytes long, which is suitable for AES encryption.
+  
+- **encrypt(passwrd, message)**: 
+  - This function encrypts the input `message` using AES in CFB (Cipher Feedback) mode. 
+  - The function first generates a private key from the password using `get_private_key()`.
+  - It generates a random initialization vector (IV) and uses AES with the key and IV to encrypt the message.
+  - The encrypted message is then converted into a hexadecimal string, and the characters `'b'` and `'"'` are removed from the output string.
+
+- **decrypt(passwrd, message)**: 
+  - This function decrypts the input `message` (which is in hexadecimal format) using AES.
+  - It generates the private key from the password, and the IV is generated randomly.
+  - The message is decrypted using the AES algorithm, and the IV is removed from the decrypted message before returning it.
+
+### 2. **app.py** (Flask Web Application)
+This file creates a Flask web application that serves as the interface for hiding and revealing secret messages using text steganography.
+
+- **index()**: 
+  - This route serves the homepage (`homepage.html`) when the user first visits the website.
+
+- **hide()**: 
+  - This route is triggered when the user wants to hide a secret message in a cover message.
+  - It processes the form data (secret message, password, and cover message), calls the `hideFunc` from `receiver.py` to encrypt and embed the secret message, and then displays the result on the homepage.
+
+- **reveal()**: 
+  - This route is triggered when the user wants to reveal a hidden secret message from a cover message.
+  - It processes the form data (stegano message and password), calls the `revealFunc` from `receiver.py` to extract and decrypt the secret message, and then displays the result on the homepage.
+
+### 3. **embed.py** (Embedding Algorithm)
+This file contains the core logic for embedding a secret message inside a cover message using a combination of mathematical operations and invisible characters (Zero Width Characters).
+
+- **Log2(x)**: 
+  - A helper function to calculate the logarithm of a number to base 2.
+
+- **isPowerOfTwo(n)**: 
+  - This function checks if a given number `n` is a power of 2.
+
+- **xor(a, b, n)**: 
+  - This function performs the XOR operation on two binary strings `a` and `b`, producing a result of length `n`.
+
+- **binaryToDecimal(n)**: 
+  - This function converts a binary string `n` into its decimal equivalent.
+
+- **embedFunc(SM, CM)**: 
+  - This is the main function that hides the secret message `SM` inside the cover message `CM`.
+  - The secret message is first converted into a binary string.
+  - The function calculates two values `alpha` and `beta` for each character in the secret message based on its ordinal value (`n`).
+  - Then, the binary values for `alpha` and `beta` are concatenated and XORed with a hash value derived from the secret key (`MS_SK`).
+  - The resulting binary string is encoded into Zero Width Characters (ZWC), which are invisible in text but can be extracted later.
+  - The final steganographic message is created by replacing the last character of the cover message with the encoded secret message.
+
+### 4. **extract.py** (Extracting Algorithm)
+This file is responsible for extracting the hidden secret message from a steganographic message.
+
+- **xor(a, b, n)**: 
+  - This function is the same as in `embed.py`. It performs the XOR operation on two binary strings `a` and `b`, producing a result of length `n`.
+
+- **binaryToDecimal(n)**: 
+  - This function converts a binary string `n` into its decimal equivalent.
+
+- **extractFunc(CM_HM)**: 
+  - This function extracts the secret message from the steganographic message `CM_HM`.
+  - It first decodes the Zero Width Characters (ZWC) back into binary.
+  - Then, it checks if the extracted hash matches the expected hash (`MR_SK`).
+  - The function then XORs the extracted binary string with the hash and decodes the result into the original secret message by reversing the encoding process from `embedFunc`.
+
+### 5. **receiver.py** (Message Processing - Receiver Side)
+This file handles the processing of the secret message on the receiver's side, including embedding and extracting the secret message.
+
+- **hideFunc(SM, password, CM)**: 
+  - This function is used to hide the secret message `SM` inside the cover message `CM`.
+  - It first encrypts the secret message using the `encrypt()` function from `AES.py`.
+  - Then, it calls `embedFunc()` from `embed.py` to embed the encrypted message inside the cover message.
+  - The final steganographic message (`CM_HM`) is returned and copied to the clipboard using `pyperclip`.
+
+### 6. **sender.py** (Message Processing - Sender Side)
+This file handles the sending side of the steganographic process, where the user hides the secret message inside the cover message.
+
+- **hideFunc(SM, password, CM)**: 
+  - This function is similar to the `hideFunc` in `receiver.py`.
+  - It encrypts the secret message using `encrypt()` from `AES.py` and then embeds the encrypted message into the cover message using `embedFunc()` from `embed.py`.
+  - The resulting steganographic message is copied to the clipboard for the user to send.
+
+### 7. **homepage.html** (HTML Template)
+This file is the front-end of the Flask application. It allows users to input their secret message, password, and cover message to either hide or reveal the secret message. The results are displayed on the same page.
+
+---
+
+### Summary:
+- **AES.py** handles encryption and decryption using the AES algorithm.
+- **app.py** is the Flask web application that provides the interface for users to interact with the system.
+- **embed.py** contains the algorithm to embed a secret message into a cover message using invisible characters and mathematical transformations.
+- **extract.py** is responsible for extracting the secret message from the steganographic message.
+- **receiver.py** processes the secret message on the receiver's side, including encryption and embedding.
+- **sender.py** processes the secret message on the sender's side, including encryption and embedding.
+- **homepage.html** is the user interface for interacting with the Flask application.
+
+Let me know if you need further clarification on any specific part!
