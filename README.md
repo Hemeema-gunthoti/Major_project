@@ -68,6 +68,109 @@ By merging both:
 5. **HTML/CSS/JavaScript:** For the user interface of the web application.
 6. **Git:** Version control system for managing code.
 
+   Here is a clear list of the libraries used in your project, along with explanations of their purpose:
+
+---
+
+### **1. Flask**
+- **Purpose:** Flask is a lightweight web framework used to create web applications.
+- **Role in the Project:**
+  - Manages HTTP requests and responses.
+  - Provides routes for encoding and decoding operations.
+  - Serves the user interface (HTML templates) and handles form submissions.
+- **Why Use Flask?**
+  - Easy to use and configure for small to medium-sized projects.
+  - Allows rapid development of web applications.
+
+---
+
+### **2. Cryptography**
+- **Purpose:** A library for implementing cryptographic algorithms securely.
+- **Role in the Project:**
+  - Provides AES (Advanced Encryption Standard) for encrypting and decrypting messages.
+  - Includes PBKDF2HMAC (Password-Based Key Derivation Function 2) for generating secure keys from passwords.
+  - Manages secure handling of salts, initialization vectors (IV), and encryption processes.
+- **Why Use Cryptography?**
+  - Implements modern, secure cryptographic primitives.
+  - Simplifies encryption tasks while ensuring best practices are followed.
+
+---
+
+### **3. Pillow (PIL Fork)**
+- **Purpose:** A Python library for image processing.
+- **Role in the Project:**
+  - Opens, manipulates, and saves images.
+  - Embeds the encrypted message into the image.
+  - Extracts the hidden message from the image.
+- **Why Use Pillow?**
+  - Easy-to-use functions for image manipulation.
+  - Supports a wide range of image formats like PNG, JPEG, BMP, etc.
+
+---
+
+### **4. Base64**
+- **Purpose:** A standard library module for encoding and decoding data in Base64 format.
+- **Role in the Project:**
+  - Encodes the encrypted message into a format suitable for embedding in an image.
+  - Decodes the extracted data back into its original binary format.
+- **Why Use Base64?**
+  - Converts binary data into a text format that is easier to embed and transmit.
+
+---
+
+### **5. Secrets**
+- **Purpose:** A standard library module for generating secure random numbers and data.
+- **Role in the Project:**
+  - Generates cryptographically secure random values for the salt and IV used in encryption.
+- **Why Use Secrets?**
+  - Provides a secure way to generate random values, essential for cryptographic security.
+
+---
+
+### **6. io**
+- **Purpose:** A standard library module for handling in-memory file-like objects.
+- **Role in the Project:**
+  - Temporarily stores the modified image in memory before saving or sending it to the user.
+- **Why Use io?**
+  - Eliminates the need for intermediate file storage on disk, improving efficiency.
+
+---
+
+### **7. HTML/CSS/JavaScript**
+- **Purpose:** Technologies for building the user interface of the web application.
+- **Role in the Project:**
+  - HTML: Structures the content of the web pages.
+  - CSS: Styles the web pages for a better user experience.
+  - JavaScript: Adds interactivity to the web pages, such as previewing images or validating form inputs.
+- **Why Use HTML/CSS/JavaScript?**
+  - Essential for creating a user-friendly and visually appealing interface.
+
+---
+
+### **8. Git**
+- **Purpose:** A version control system for tracking changes in code and collaborating with others.
+- **Role in the Project:**
+  - Manages the project's source code and ensures version history is maintained.
+  - Facilitates collaboration and code sharing through GitHub.
+- **Why Use Git?**
+  - Provides a reliable way to manage code changes and resolve conflicts.
+
+---
+
+### **Summary of Libraries and Tools**
+| **Library/Tool**      | **Purpose**                                    | **Why Use It?**                                                  |
+|------------------------|-----------------------------------------------|------------------------------------------------------------------|
+| Flask                 | Web framework                                 | For handling HTTP requests and serving the web app.             |
+| Cryptography          | Cryptographic operations                      | For AES encryption and secure key derivation.                   |
+| Pillow                | Image processing                              | For embedding and extracting messages from images.              |
+| Base64                | Data encoding                                 | For converting binary data into text format.                    |
+| Secrets               | Secure random data generation                 | For generating salt and IV for encryption.                      |
+| io                    | In-memory file handling                       | For temporarily storing images without saving to disk.          |
+| HTML/CSS/JavaScript   | Front-end development                         | For creating and styling the web application's user interface.  |
+| Git                   | Version control                               | For managing code and collaborating effectively.                |
+
+By using these libraries and tools, your project achieves secure, efficient, and user-friendly functionality for steganography and cryptography.
+
 ---
 
 ### **Why Should We Use Steganography + Cryptography?**
